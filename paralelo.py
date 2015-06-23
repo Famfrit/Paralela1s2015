@@ -144,6 +144,63 @@ def tipoMatriz(matrix):
     if(matrix=="matlist.blosum35"):
         matrix = matlist.blosum35
         return matrix
+    if(matrix=="matlist.blosum40"):
+        matrix = matlist.blosum40
+        return matrix
+    if(matrix=="matlist.blosum45"):
+        matrix = matlist.blosum45
+        return matrix
+    if(matrix=="matlist.blosum50"):
+        matrix = matlist.blosum50
+        return matrix
+    if(matrix=="matlist.blosum55"):
+        matrix = matlist.blosum55
+        return matrix
+    if(matrix=="matlist.blosum60"):
+        matrix = matlist.blosum60
+        return matrix
+    if(matrix=="matlist.blosum65"):
+        matrix = matlist.blosum65
+        return matrix
+    if(matrix=="matlist.blosum70"):
+        matrix = matlist.blosum70
+        return matrix
+    if(matrix=="matlist.blosum75"):
+        matrix = matlist.blosum75
+        return matrix
+    if(matrix=="matlist.blosum80"):
+        matrix = matlist.blosum80
+        return matrix
+    if(matrix=="matlist.blosum85"):
+        matrix = matlist.blosum85
+        return matrix
+    if(matrix=="matlist.blosum90"):
+        matrix = matlist.blosum90
+        return matrix
+    if(matrix=="matlist.blosum95"):
+        matrix = matlist.blosum95
+        return matrix
+    if(matrix=="matlist.pam30"):
+        matrix = matlist.pam30
+        return matrix
+    if(matrix=="matlist.pam60"):
+        matrix = matlist.pam60
+        return matrix
+    if(matrix=="matlist.pam90"):
+        matrix = matlist.pam90
+        return matrix
+    if(matrix=="matlist.pam120"):
+        matrix = matlist.pam120
+        return matrix
+    if(matrix=="matlist.pam180"):
+        matrix = matlist.pam180
+        return matrix
+    if(matrix=="matlist.pam250"):
+        matrix = matlist.pam250
+        return matrix
+    if(matrix=="matlist.pam300"):
+        matrix = matlist.pam300
+        return matrix
 
 def mejoresPorProcesador(cant, secInicial, descripciones, secuencias, arrayScore, matrix): # cant = la cantidad de secuencias $
     matrix = matlist.blosum62
