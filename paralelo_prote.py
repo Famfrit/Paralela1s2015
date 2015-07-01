@@ -92,9 +92,9 @@ def crearPDF(arrPor, desc, cant, final, descr, nombre, matrix, penalty):
     #Acá parte el for
     #output
     c.setFont("Helvetica",15)
-    c.drawString(100,525,"Los porcentajes de similitud para las "+str(cant)+" cadenas son los siguientes:")
+    c.drawString(100,425,"Los porcentajes de similitud para las "+str(cant)+" cadenas son los siguientes:")
     c.setFont("Helvetica",10)
-    posicion = 515
+    posicion = 415
     for i in range(0,cant):
         posicion = posicion - 15
         resta = random.randint(1, 5)
@@ -109,7 +109,7 @@ def crearPDF(arrPor, desc, cant, final, descr, nombre, matrix, penalty):
 
     c.setFont("Helvetica", 10)
     sTiempo = "Tiempo de ejecucion del algoritmo: " + str(final) + " Segundos"
-    c.drawString(150,308,sTiempo)
+    c.drawString(150,100,sTiempo)
     c.drawImage("/var/www/html/webParalela/logo.png",200,80,width=200,height=200)
 
 
