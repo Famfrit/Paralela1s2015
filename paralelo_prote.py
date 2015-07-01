@@ -51,7 +51,7 @@ def envio_mail(mail, nombre):
               "\nUn PDF con información general ("+nombre+".pdf)."
               "\n\nRealizado por: http://00-ironman.clustermarvel.utem/webParalela/"})
 
-def crearPDF(arrPor, desc, cant, final, descr, nombre):
+def crearPDF(arrPor, desc, cant, final, descr, nombre, matrix, penalty):
 
     #ancho = 612
     #alto = 792
@@ -80,6 +80,16 @@ def crearPDF(arrPor, desc, cant, final, descr, nombre):
     c.drawString(100,575,"Descripción de la cadena de entrada:")
     c.setFont("Helvetica",10)
     c.drawString(150,550,desc)
+    c.setFont("Helvetica",15)
+    c.drawString(100,525,"Con la matriz elegida:")
+    c.setFont("Helvetica",10)
+    c.drawString(150,500,matrix)
+    c.setFont("Helvetica",15)
+    c.drawString(100,475,"Y con la penalización de:")
+    c.setFont("Helvetica",10)
+    c.drawString(150,450,penalty)
+
+    #Acá parte el for
     #output
     c.setFont("Helvetica",15)
     c.drawString(100,525,"Los porcentajes de similitud para las "+str(cant)+" cadenas son los siguientes:")
@@ -228,7 +238,7 @@ def mejoresPorProcesador(cant, secInicial, descripciones, secuencias, arrayScore
                 descripciones[j] = l
                 secuencias[j] = m
                 secInicial[j] = n 
-	retorno = dict(alineaciones = secuencias[0:cant+1], info = descripciones[0:cant+1], puntaje = arrayScore[0:cant+1], matriz = matrix, normal = secInicial[0:cant+1])
+    retorno = dict(alineaciones = secuencias[0:cant+1], info = descripciones[0:cant+1], puntaje = arrayScore[0:cant+1], matriz = matrix, normal = secInicial[0:cant+1])
     return retorno
 
 def generarAlineacion(inicio, fin, sec_comp, matrix, gap_open, resultados):
@@ -250,21 +260,21 @@ def generarAlineacion(inicio, fin, sec_comp, matrix, gap_open, resultados):
     inicio3 = time.time()
     # Se tomas las i secuencias de ADN a comprar contenidas en la bdd
     for i in range(inicio, fin):
-    	p53_entrada = sec_comp
-    	p53_base = subArreglo1[i]
+        p53_entrada = sec_comp
+        p53_base = subArreglo1[i]
 
-    	alns = pairwise2.align.globalds(p53_entrada, p53_base, matrix, gap_open, gap_extend)
+        alns = pairwise2.align.globalds(p53_entrada, p53_base, matrix, gap_open, gap_extend)
 
-    	top_aln = alns[0]
-    	aln_entrada, aln_base, score, begin, end = top_aln
-    	bestScore[i] = score
-    	bestInfo[i] = subArreglo2[i]
-    	bestAlign[i] = aln_base
+        top_aln = alns[0]
+        aln_entrada, aln_base, score, begin, end = top_aln
+        bestScore[i] = score
+        bestInfo[i] = subArreglo2[i]
+        bestAlign[i] = aln_base
         bestNorm[i] = aln_entrada
     lista = mejoresPorProcesador(resultados, bestNorm, bestInfo, bestAlign, bestScore, matrix)
     comm.send(lista, dest=0)
 
-def Mejores(cant, secInicial, descripciones, secuencias, arrayScore, matriz, gap_open, scoremax, mail, sec_id, final, nombre): # cant = la cantidad de secuencias $
+def Mejores(cant, secInicial, descripciones, secuencias, arrayScore, matriz, gap_open, scoremax, mail, sec_id, final, nombre, laMatriz): # cant = la cantidad de secuencias $
     matrix = matriz
     gap_extend = -0.5
     tam = len(arrayScore)
@@ -342,7 +352,7 @@ def Mejores(cant, secInicial, descripciones, secuencias, arrayScore, matriz, gap
         arrPorc[s] = simil
         dscr[s] = descr[0] 
     fa.close()
-    crearPDF(arrPorc, sec_id, cant, final, dscr, nombre)
+    crearPDF(arrPorc, sec_id, cant, final, dscr, nombre, laMatriz, gap_open)
     envio_mail(mail, nombre)
 
 
@@ -398,7 +408,7 @@ def run():
         scoremax = mismaSecuencia(sec_comp, matrix, penalizacion)
         print "tiempo final final!: ", time.time() - inicio1
         final = time.time() - inicio1
-	final = round(final, 3)
-        Mejores(resultados, arrOrig, arrDesc, arrAlin, arrScore, matriz, penalizacion, scoremax, mail, sec_id, final, nombre)
-	#comm.Disconnect()
+    final = round(final, 3)
+        Mejores(resultados, arrOrig, arrDesc, arrAlin, arrScore, matriz, penalizacion, scoremax, mail, sec_id, final, nombre, matrix)
+    #comm.Disconnect()
 run()
