@@ -42,7 +42,7 @@ def envio_mail(mail, nombre):
     return requests.post(
         "https://api.mailgun.net/v3/sandbox3761d267c8184fa2afb562ff83f8881e.mailgun.org/messages",
         auth=("api", "key-bccd075f02a12db1dee03a7710800a5d"),
-        files=[("attachment", open("/mpi/FASTA/Envio/"+nombre+".pdf"))],
+        files=[("attachment", open("/var/www/html/webParalela/FASTA/Envio"+nombre+".pdf"))],
         data={"from": "Cluster Marvel<postmaster@sandbox3761d267c8184fa2afb562ff83f8881e.mailgun.org>",
               "to": "<"+mail+">",
               "subject": "Resultados Alineamiento de Secuencias",
@@ -55,7 +55,7 @@ def crearPDF(arrPor, desc, cant, final, descr, nombre, matrix, penalty):
 
     #ancho = 612
     #alto = 792
-    c=canvas.Canvas("/mpi/FASTA/Envio/"+nombre+".pdf", pagesize = letter)
+    c=canvas.Canvas("/var/www/html/webParalela/FASTA/Envio"+nombre+".pdf", pagesize = letter)
     #cabecera
     c.setFont("Helvetica-Oblique",10)
     c.drawImage("/var/www/html/webParalela/logo.png",10,700,width=90,height=90)
@@ -312,9 +312,9 @@ def Mejores(cant, secInicial, descripciones, secuencias, arrayScore, matriz, gap
         print '\n\n'
         print aln_entrada+'\n\n'+aln_basemay
     """
-    fa = open("/mpi/FASTA/Envio/"+nombre+".fasta", "w")
+    fa = open("/var/www/html/webParalela/FASTA/Envio/"+nombre+".fasta", "w")
     fa.close()
-    fa = open("/mpi/FASTA/Envio/"+nombre+".fasta", "a")
+    fa = open("/var/www/html/webParalela/FASTA/Envio/"+nombre+".fasta", "a")
     for s in range(0,cant):
         secBase = secuencias[s]
         secIni = secInicial[s]
